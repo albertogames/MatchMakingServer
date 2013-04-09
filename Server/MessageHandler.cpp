@@ -4,7 +4,7 @@
 CMessageHandler::~CMessageHandler(){
 }
 
-MessageCode CMessageHandler::getMessageCode(){
+ClientState CMessageHandler::getMessageCode(){
 	return _messageCode;
 }
 

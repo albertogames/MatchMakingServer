@@ -1,11 +1,21 @@
 #include "Server.h"
 #include "ClientConnection.h"
 #include "MessageHandler.h"
+#include "Parser.h"
+#include "Constants.h"
+
+#include <assert.h>
+
+#include <boost/foreach.hpp>
 
 CServer::~CServer(){
 }
 
 void CServer::run(){
+
+	//Init parser class
+	assert(CParser::Init(":") && "Error al inicializar Parser");
+
 	bool finish;
 	finish = false;
 
@@ -67,7 +77,6 @@ void CServer::run(){
 					}
 
 					std::cout << "Client id: " << id <<" A connection was found" << std::endl;
-					
 
 					_numConn++;
 
@@ -109,7 +118,79 @@ void CServer::handler(CMessageHandler* message)
 		
 		}	
 
+		case DISP_PLAY:{
+			int id = message->getClientConnection()->getId();
+
+			_clientConnectionsDISP.push_back(message->getClientConnection());
+
+			sendPlayersToNewPlayer(message->getClientConnection(),message->getClientConnection()->getUserName());
+
+			notifyNewPlayer(message->getClientConnection()->getUserName());
+
+			break;			   
+		}
+
+		case DISP_PLAY_CANCEL:{
+
+			_clientConnectionsDISP.remove(message->getClientConnection());
+
+			notifyExitPlayer(message->getClientConnection()->getUserName());
+
+			break;
+		}
+
 	}
 
 	delete(message);
 }
+
+void CServer::notifyExitPlayer(std::string user){
+	std::string message ="";
+
+	message += Constants::COM_DISP_PLAY_CANCEL;
+	message += Constants::PARSER_CHAR;
+	message += user;
+	message += Constants::PARSER_CHAR;
+
+	notifyPlayers(message,user);
+}
+void CServer::notifyNewPlayer(std::string user){
+	
+	std::string message ="";
+
+	message += Constants::COM_NEW_PLAYER;
+	message += Constants::PARSER_CHAR;
+	message += user;
+	message += Constants::PARSER_CHAR;
+
+	notifyPlayers(message,user);	
+}
+
+void CServer::sendPlayersToNewPlayer(CClientConnection *client, std::string user){
+
+	clientConnectionsDISp_type::iterator it;
+	for (it = _clientConnectionsDISP.begin() ; it != _clientConnectionsDISP.end() ; it++){
+		if ((*it)->getUserName().compare(user) != 0){
+			std::string message ="";
+
+			message += Constants::COM_NEW_PLAYER;
+			message += Constants::PARSER_CHAR;
+			message += (*it)->getUserName();
+			message += Constants::PARSER_CHAR;
+
+			client->sendMessage(message);
+		}
+	}
+
+}
+
+ void CServer::notifyPlayers(std::string message, std::string user){
+
+	clientConnectionsDISp_type::iterator it;
+	for (it = _clientConnectionsDISP.begin() ; it != _clientConnectionsDISP.end() ; it++){
+		if ((*it)->getUserName().compare(user) != 0){
+			(*it)->sendMessage(message);
+		}
+	}
+
+ }

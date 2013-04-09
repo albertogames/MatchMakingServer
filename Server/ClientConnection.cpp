@@ -1,7 +1,14 @@
 #include "ClientConnection.h"
 
-#include "Handler.h"
+
 #include "MessageHandler.h"
+#include "Parser.h"
+#include "Handler.h"
+#include "Builder.h"
+#include "BaseClass.h"
+#include <iterator>
+#include "Constants.h"
+
 
 CClientConnection::CClientConnection(){
 
@@ -12,10 +19,6 @@ CClientConnection::~CClientConnection()
 	closeConnection();
 	//Erase pointer
 	_server = NULL;
-}
-
-int CClientConnection::getId(){
-	return _id;
 }
 
 void CClientConnection::startThread()
@@ -30,15 +33,22 @@ void CClientConnection::startThread()
 
 	for(;!finish;)
 	{
-	
-		
 
 		errorCode = recv(_connection, message, sizeof(message), NULL);
 		
 		if (errorCode > 0){
 
-			analyzeMessage(message);
-			strcpy_s(message, "");
+			if (_connectionState == ClientState::LOGGED){
+
+				analyzeMessage(message);
+				strcpy_s(message, "");
+			
+			}else if (_connectionState == ClientState::CONNECTED){
+			
+				login(message);
+				strcpy_s(message,"");
+			
+			}
 		}
 		else{
 			
@@ -57,7 +67,7 @@ void CClientConnection::startThread()
 			closeConnection();
 
 			_server->handler(_msj);
-
+			
 			finish = true;
 
 		}
@@ -72,15 +82,67 @@ void CClientConnection::closeConnection(){
 	}
 }
 
-void CClientConnection::sendMessage(char* message)
+void CClientConnection::sendMessage(std::string message)
 {
-	int errorCode = send(_connection,"Hello Client",13,NULL);
-
+	int errorCode = send(_connection,message.c_str(),sizeof(message)+2,NULL);
+	
 	if (errorCode == SOCKET_ERROR){
 		std::cout << "ERROR ClientConnection.sendMessage : send(): " << WSAGetLastError() << std::endl;
 	}
+
 }
 
-void CClientConnection::analyzeMessage(char* message){
+void CClientConnection::analyzeMessage(std::string message){
 	std::cout << "Client id: " << _id << " MESSAGE: " << message << std::endl;
+	
+	std::list<std::string> messageParams = CParser::getSingletonPtr()->parse(message);
+
+	if (messageParams.size() > 1){
+		std::list<std::string>::iterator it = messageParams.begin();
+
+		std::string code = *it;
+
+		if (code.compare(Constants::COM_DISP_PLAY) == 0){
+
+			CMessageHandler* _msj = new CMessageHandler(this,DISP_PLAY);
+
+			_server->handler(_msj);
+		}
+
+		if (code.compare(Constants::COM_DISP_PLAY_CANCEL) == 0){
+			CMessageHandler* _msj = new CMessageHandler(this,DISP_PLAY_CANCEL);
+
+			_server->handler(_msj);
+		}
+	}
+
+	//sendMessage("Serve");
+}
+
+void CClientConnection::login(std::string message){
+
+	std::list<std::string> messageParams = CParser::getSingletonPtr()->parse(message);
+	
+	if (messageParams.size() == 4){
+
+		std::list<std::string>::iterator it = messageParams.begin();
+		std::string code = *it;
+		it++;
+		std::string user = *it;
+		it++;
+		std::string passwd = *it; 
+
+		std::cout << "Code: " << code << " Client user: " << user << " passwd: " << passwd << std::endl;
+		
+		_userName = user;
+
+		if (code.compare(Constants::COM_LOG) == 0){
+			_connectionState = ClientState::LOGGED;
+		
+			sendMessage(Constants::COM_LOG_OK + Constants::PARSER_CHAR);
+		}
+
+		messageParams.clear();
+	
+	}
 }

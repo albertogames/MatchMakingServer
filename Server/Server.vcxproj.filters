@@ -13,6 +13,33 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Parser">
+      <UniqueIdentifier>{75c8a2ae-0a2c-4305-a7de-81c1e0d3530c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Parser\Archivos de recursos">
+      <UniqueIdentifier>{df9d07c4-d71c-4536-8412-f6d1525e2dda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Parser\Archivos de encabezado">
+      <UniqueIdentifier>{8942fe27-0928-427e-94f6-e966d476e4a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Parser\Clases">
+      <UniqueIdentifier>{9c7fddbc-449c-4333-bff9-a8cc2648424b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Parser\Clases\Archivos de encabezado">
+      <UniqueIdentifier>{c256abd8-db45-4de5-994b-3091641f7d74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Parser\Clases\Archivos de recursos">
+      <UniqueIdentifier>{7f2af94a-cb91-496f-bb33-d63e55d4d7d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Database">
+      <UniqueIdentifier>{31555767-d3fc-43c2-8df3-2ed652a1937e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Database\Archivos de encabezado">
+      <UniqueIdentifier>{2d62aefb-ff22-42dc-8750-dff9b4c4d9bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Database\Archivos de recursos">
+      <UniqueIdentifier>{7f4f4636-3663-4125-bbd5-a44f7d668fea}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClientConnection.h">
@@ -30,6 +57,21 @@
     <ClInclude Include="Thread.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="Parser.h">
+      <Filter>Parser\Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Builder.h">
+      <Filter>Parser\Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="LoginInfo.h">
+      <Filter>Parser\Clases\Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseClass.h">
+      <Filter>Parser\Clases\Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Constants.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ClientConnection.cpp">
@@ -45,6 +87,15 @@
       <Filter>Archivos de recursos</Filter>
     </ClCompile>
     <ClCompile Include="Thread.cpp">
+      <Filter>Archivos de recursos</Filter>
+    </ClCompile>
+    <ClCompile Include="Parser.cpp">
+      <Filter>Parser\Archivos de recursos</Filter>
+    </ClCompile>
+    <ClCompile Include="Builder.cpp">
+      <Filter>Parser\Archivos de recursos</Filter>
+    </ClCompile>
+    <ClCompile Include="Constants.cpp">
       <Filter>Archivos de recursos</Filter>
     </ClCompile>
   </ItemGroup>

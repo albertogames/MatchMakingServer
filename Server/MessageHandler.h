@@ -1,27 +1,24 @@
 
 #include "ClientConnection.h"
 
-enum MessageCode{
-	CONNECTION_DOWN
-};
 
 class CMessageHandler{
 
 public:
-	CMessageHandler(CClientConnection* clientConnection, MessageCode messageCode):
+	CMessageHandler(CClientConnection* clientConnection, ClientState messageCode):
 				_clientConnection(clientConnection),
 				_messageCode(messageCode)
 				{};
 
 	~CMessageHandler();
 
-	MessageCode getMessageCode();
+	ClientState getMessageCode();
 	CClientConnection* getClientConnection();
 
 private:
 	int id;
 
 	CClientConnection* _clientConnection;
-	MessageCode _messageCode;
+	ClientState _messageCode;
 
 };

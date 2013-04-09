@@ -26,7 +26,7 @@
 
 #include <boost\container\list.hpp>
 #include <boost\ptr_container\ptr_map.hpp>
-
+#include <boost\shared_ptr.hpp>
 
 class CMEssageHandler;
 
@@ -57,6 +57,14 @@ public:
 	void run();
 	
 private:
+
+	void notifyExitPlayer(std::string user);
+
+	void notifyNewPlayer(std::string user);
+
+	void notifyPlayers(std::string message, std::string user);
+
+	void sendPlayersToNewPlayer(CClientConnection *client, std::string user);
 
 	WSAData _wsaData;
 	WORD _dllVersion;
@@ -89,8 +97,14 @@ private:
 	SOCKET _sConnect;
 	char message[200];
 	std::string strmessage;
+
 	
-	boost::ptr_map<int, CClientConnection> _clientConnections;
+	typedef boost::ptr_map<int, CClientConnection> clientConnections_type;
+	clientConnections_type _clientConnections;
+
+	typedef boost::container::list<CClientConnection*> clientConnectionsDISp_type;
+	clientConnectionsDISp_type _clientConnectionsDISP;
+
 	boost::container::list<int> _freePositions;
 };
 

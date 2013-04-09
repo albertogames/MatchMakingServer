@@ -69,16 +69,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BaseClass.h" />
+    <ClInclude Include="Builder.h" />
     <ClInclude Include="ClientConnection.h" />
+    <ClInclude Include="Constants.h" />
     <ClInclude Include="Handler.h" />
+    <ClInclude Include="LoginInfo.h" />
     <ClInclude Include="MessageHandler.h" />
+    <ClInclude Include="Parser.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="Thread.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Builder.cpp" />
     <ClCompile Include="ClientConnection.cpp" />
+    <ClCompile Include="Constants.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MessageHandler.cpp" />
+    <ClCompile Include="Parser.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="Thread.cpp" />
   </ItemGroup>
