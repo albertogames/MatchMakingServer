@@ -12,17 +12,12 @@
 
 #include <boost\thread.hpp>
 
-class CServer;
-class IHandler;
-class CMessageHandler;
+class IConnectionMessagesProcessor;
+class IGameMessagesProcessor;
 
-enum ClientState{
-		CONNECTION_DOWN,
+enum ConnectionState{
 		CONNECTED,
-		LOGGED,
-		PLAYING,
-		DISP_PLAY,
-		DISP_PLAY_CANCEL
+		CONNECTION_DOWN
 	};
 
 
@@ -30,15 +25,37 @@ class CClientConnection: public IThread
 {	
 
 public:
-	CClientConnection();
+	CClientConnection(){};
 
 	virtual ~CClientConnection();
 
-	CClientConnection(SOCKET connection, IHandler* server,int id): 
+	CClientConnection(SOCKET connection, IConnectionMessagesProcessor* connectionMessagesProcessor,int id): 
 				_connection(connection),
-				_server(server),
+				_connectionMessagesProcessor(connectionMessagesProcessor),
 				_connectionState(CONNECTED),
+				_gameMessagesProcessor(NULL),
 				_id(id){};
+
+	CClientConnection(SOCKET connection, IConnectionMessagesProcessor* connectionMessagesProcessor):
+				_connection(connection),
+				_connectionMessagesProcessor(connectionMessagesProcessor),
+				_connectionState(CONNECTED),
+				_gameMessagesProcessor(NULL)
+				{};
+
+	CClientConnection(SOCKET connection, IConnectionMessagesProcessor* connectionMessagesProcessor, IGameMessagesProcessor* gameMessagesProcessor, int id): 
+				_connection(connection),
+				_connectionMessagesProcessor(connectionMessagesProcessor),
+				_connectionState(CONNECTED),
+				_gameMessagesProcessor(gameMessagesProcessor),
+				_id(id){};
+
+	CClientConnection(SOCKET connection, IConnectionMessagesProcessor* connectionMessagesProcessor, IGameMessagesProcessor* gameMessagesProcessor):
+				_connection(connection),
+				_connectionMessagesProcessor(connectionMessagesProcessor),
+				_connectionState(CONNECTED),
+				_gameMessagesProcessor(gameMessagesProcessor)
+				{};
 
 	int getId() {return _id;}
 
@@ -46,28 +63,23 @@ public:
 
 	void sendMessage(std::string message);
 
-	ClientState getConnectionState(){ return _connectionState; }
-	
-	std::string getUserName(){return _userName;}
+	ConnectionState getConnectionState(){ return _connectionState; }
 
 private:
 
 	void closeConnection();
 
 	virtual void startThread();
-	
-	void analyzeMessage(std::string message);
-	void login(std::string message);
 
 	int _id;
 
-	IHandler* _server;
+	IConnectionMessagesProcessor* _connectionMessagesProcessor;
+
+	IGameMessagesProcessor* _gameMessagesProcessor;
 
 	SOCKET _connection;
 
-	ClientState _connectionState;
-
-	std::string _userName;
+	ConnectionState _connectionState;
 
 	
 };

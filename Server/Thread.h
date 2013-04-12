@@ -3,7 +3,7 @@
 #ifndef __Thread_H
 #define __Thread_H
 
-
+/*
 enum ThreadState
 {
 			READY,
@@ -11,30 +11,41 @@ enum ThreadState
 			BLOCKED,
 			TERMINATED
 };
+*/
+
 
 class IThread{
 
 public:
-	IThread();
+	IThread():
+	  _finish(false)
+	  {};
 
 	virtual ~IThread();
 
 	void run();
 
+	void stop();
+	
+	/*
 	ThreadState getThreadState();
 
 	bool isReady();
 	bool isRunning();
 	bool isBlocked();
 	bool isTerminated();
+	*/
+protected:
+	bool _finish;
 
 private:
 
 	virtual void startThread() = 0;
 	
 	boost::thread* _thread;
-
+	/*
 	ThreadState _threadState;
+	*/
 };
 
 #endif

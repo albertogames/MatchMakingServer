@@ -3,8 +3,8 @@
 
 //Standar headers for a console application
 
-#ifndef __Server_H
-#define __Server_H
+#ifndef __ConnectionsServer_H
+#define __ConnectionsServer_H
 
 #include <sdkddkver.h>
 #include <conio.h>
@@ -19,24 +19,26 @@
 #include <Windows.h>
 #include <iostream>
 
-#include "Handler.h"
+#include "ConnectionMessagesProcessor.h"
 #include "ClientConnection.h"
+#include "ConnectionsContainer.h"
+#include "GameMessagesProcessor.h"
 
 #include <boost\thread\thread.hpp>
 
 #include <boost\container\list.hpp>
 #include <boost\ptr_container\ptr_map.hpp>
-#include <boost\shared_ptr.hpp>
 
 class CMEssageHandler;
+class CConnectionsContainer;
 
-class CServer : public IHandler
+class CConnectionsServer : public IConnectionMessagesProcessor, public IGameMessagesProcessor
 {
 
 public:
-	virtual ~CServer();
+	virtual ~CConnectionsServer(){};
 
-	CServer(char* ip, int port, int maxConn):_ip(ip),
+	CConnectionsServer(char* ip, int port, int maxConn):_ip(ip),
 			_port(port),
 			_maxConn(maxConn),
 			_dllVersion(MAKEWORD(2,1)),
@@ -47,24 +49,36 @@ public:
 			_bOptVal(TRUE),
 			_bOptLen(sizeof(_bOptVal)),
 			_initDllResponse(WSAStartup(_dllVersion, &_wsaData)),
-			_numConn(0)
+			_numConn(0),
+			_gameMessagesProcessor(NULL)
+			{
+			};
+
+	CConnectionsServer(char* ip, int port, int maxConn, IGameMessagesProcessor* gameMessagesProcessor):_ip(ip),
+			_port(port),
+			_maxConn(maxConn),
+			_dllVersion(MAKEWORD(2,1)),
+			_addrLenght(sizeof(_addr)),
+			_af(AF_INET),
+			_type(SOCK_STREAM),
+			_protocol(IPPROTO_TCP),
+			_bOptVal(TRUE),
+			_bOptLen(sizeof(_bOptVal)),
+			_initDllResponse(WSAStartup(_dllVersion, &_wsaData)),
+			_numConn(0),
+			_gameMessagesProcessor(gameMessagesProcessor)
 			{
 			};
 
 
-	virtual void handler(CMessageHandler* message);
+
+	virtual void processConnectionMessage(CConnectionMessage* connectionMessage);
+	virtual void processGameMessage();
 
 	void run();
 	
 private:
 
-	void notifyExitPlayer(std::string user);
-
-	void notifyNewPlayer(std::string user);
-
-	void notifyPlayers(std::string message, std::string user);
-
-	void sendPlayersToNewPlayer(CClientConnection *client, std::string user);
 
 	WSAData _wsaData;
 	WORD _dllVersion;
@@ -98,14 +112,10 @@ private:
 	char message[200];
 	std::string strmessage;
 
-	
-	typedef boost::ptr_map<int, CClientConnection> clientConnections_type;
-	clientConnections_type _clientConnections;
+	IGameMessagesProcessor* _gameMessagesProcessor;
 
-	typedef boost::container::list<CClientConnection*> clientConnectionsDISp_type;
-	clientConnectionsDISp_type _clientConnectionsDISP;
+	CConnectionsContainer* _connectionsContainer;
 
-	boost::container::list<int> _freePositions;
 };
 
 

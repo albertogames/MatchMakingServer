@@ -13,24 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Parser">
-      <UniqueIdentifier>{75c8a2ae-0a2c-4305-a7de-81c1e0d3530c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Parser\Archivos de recursos">
-      <UniqueIdentifier>{df9d07c4-d71c-4536-8412-f6d1525e2dda}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Parser\Archivos de encabezado">
-      <UniqueIdentifier>{8942fe27-0928-427e-94f6-e966d476e4a2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Parser\Clases">
-      <UniqueIdentifier>{9c7fddbc-449c-4333-bff9-a8cc2648424b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Parser\Clases\Archivos de encabezado">
-      <UniqueIdentifier>{c256abd8-db45-4de5-994b-3091641f7d74}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Parser\Clases\Archivos de recursos">
-      <UniqueIdentifier>{7f2af94a-cb91-496f-bb33-d63e55d4d7d6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Database">
       <UniqueIdentifier>{31555767-d3fc-43c2-8df3-2ed652a1937e}</UniqueIdentifier>
     </Filter>
@@ -40,63 +22,81 @@
     <Filter Include="Database\Archivos de recursos">
       <UniqueIdentifier>{7f4f4636-3663-4125-bbd5-a44f7d668fea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="General">
+      <UniqueIdentifier>{6a406753-9bb0-40d2-93c0-2d610780c4f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="General\Server">
+      <UniqueIdentifier>{eea555fc-a9d6-4c58-9abc-bf89db94a9f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{44aee1ff-909e-4641-9c30-148730e54dd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\GameServer">
+      <UniqueIdentifier>{5901afe7-c518-4c84-9c91-ec106e095e27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="General\Server\ConnectionsContainer">
+      <UniqueIdentifier>{4a45eac5-fdf1-49bd-bfe3-ac455ba43c14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="General\Server\ConnectionsContainer\ClientConnection">
+      <UniqueIdentifier>{67314121-0d00-4b0d-8d5e-535ff4678e32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="General\Server\Thread">
+      <UniqueIdentifier>{aa485d46-c6c8-4aec-9ae0-69caa8ddfc2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="General\Server\ConnectionMessage">
+      <UniqueIdentifier>{ff5a1500-dc73-4aee-ba83-354d3f96ebf1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ClientConnection.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="Handler.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="MessageHandler.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="Server.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="Thread.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="Parser.h">
-      <Filter>Parser\Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="Builder.h">
-      <Filter>Parser\Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="LoginInfo.h">
-      <Filter>Parser\Clases\Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseClass.h">
-      <Filter>Parser\Clases\Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="Constants.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="ClientConnection.h">
+      <Filter>General\Server\ConnectionsContainer\ClientConnection</Filter>
+    </ClInclude>
+    <ClInclude Include="Thread.h">
+      <Filter>General\Server\Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="ConnectionMessage.h">
+      <Filter>General\Server\ConnectionMessage</Filter>
+    </ClInclude>
+    <ClInclude Include="ConnectionsContainer.h">
+      <Filter>General\Server\ConnectionsContainer</Filter>
+    </ClInclude>
+    <ClInclude Include="GameServer.h">
+      <Filter>Game\GameServer</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMessagesProcessor.h">
+      <Filter>Game\GameServer</Filter>
+    </ClInclude>
+    <ClInclude Include="ConnectionMessagesProcessor.h">
+      <Filter>General\Server\ConnectionMessage</Filter>
+    </ClInclude>
+    <ClInclude Include="ConnectionsServer.h">
+      <Filter>General\Server</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ClientConnection.cpp">
-      <Filter>Archivos de recursos</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Archivos de recursos</Filter>
     </ClCompile>
-    <ClCompile Include="MessageHandler.cpp">
-      <Filter>Archivos de recursos</Filter>
-    </ClCompile>
-    <ClCompile Include="Server.cpp">
-      <Filter>Archivos de recursos</Filter>
-    </ClCompile>
-    <ClCompile Include="Thread.cpp">
-      <Filter>Archivos de recursos</Filter>
-    </ClCompile>
-    <ClCompile Include="Parser.cpp">
-      <Filter>Parser\Archivos de recursos</Filter>
-    </ClCompile>
-    <ClCompile Include="Builder.cpp">
-      <Filter>Parser\Archivos de recursos</Filter>
-    </ClCompile>
     <ClCompile Include="Constants.cpp">
       <Filter>Archivos de recursos</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientConnection.cpp">
+      <Filter>General\Server\ConnectionsContainer\ClientConnection</Filter>
+    </ClCompile>
+    <ClCompile Include="Thread.cpp">
+      <Filter>General\Server\Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="ConnectionsContainer.cpp">
+      <Filter>General\Server\ConnectionsContainer</Filter>
+    </ClCompile>
+    <ClCompile Include="GameServer.cpp">
+      <Filter>Game\GameServer</Filter>
+    </ClCompile>
+    <ClCompile Include="ConnectionsServer.cpp">
+      <Filter>General\Server</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

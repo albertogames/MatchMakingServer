@@ -1,9 +1,9 @@
-#include "Server.h"
+#include "ConnectionsServer.h"
 
 using namespace std;
 
 int main()
 {
-	CServer* server = new CServer("192.168.1.100",9999,128);
+	CConnectionsServer* server = new CConnectionsServer("127.0.0.1",9999,128);
 	server->run();
 }

@@ -1,9 +1,5 @@
 #include "Thread.h"
 
-IThread::IThread()
-{
-}
-
 IThread::~IThread(){
 	if (_thread){
 		_thread->interrupt();
@@ -15,7 +11,11 @@ IThread::~IThread(){
 void IThread::run(){
 	_thread = new boost::thread(&IThread::startThread,this);
 }
-
+/*
 ThreadState IThread::getThreadState(){
 	return _threadState;
+}*/
+
+void IThread::stop(){
+	_finish = true;
 }
