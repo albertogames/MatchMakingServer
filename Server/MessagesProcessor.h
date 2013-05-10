@@ -1,0 +1,13 @@
+#ifndef __MessagesProcessor_H
+#define __MessagesProcessor_H
+
+class CClientConnection;
+
+class IMessagesProcessor{
+
+public:
+	virtual void processMessage(char* message, CClientConnection* clientConnection) = 0;
+	virtual void sendMessage(const char* message, int clientId) = 0;
+};
+
+#endif 
