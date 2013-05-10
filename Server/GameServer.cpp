@@ -1,15 +1,56 @@
 #include "GameServer.h"
-//#include "GameConnectionMessage.h"
+#include "Serializer.h"
+#include "ConnectionsServer.h"
+
+#include "messages.pb.h"
 
 
 CGameServer::CGameServer(char* ip, int port, int maxConn){
 	
 	_connectionsServer = new CConnectionsServer(ip,port,maxConn,this);
 
+	_connectionsServer->run();
+	
 }
 
-void CGameServer::processGameMessage(){
+void CGameServer::processGameMessage(char* message, int clientId){
 
+	
+	Messages::Message msg;
+	msg.ParseFromArray(message,strlen(message));
+	
+	Messages::Message_MessageType messageType = msg.messagetype();
+
+	switch (messageType){
+	
+		//LOG
+		case Messages::Message_MessageType::Message_MessageType_LOG:{
+
+
+			Messages::Message* messageSend = new Messages::Message();
+			messageSend->set_messagetype(Messages::Message_MessageType::Message_MessageType_LOG_OK);
+
+			int i = messageSend->ByteSize();
+			char* aux = (char*)malloc(i);
+			memset(aux,0,i);
+			messageSend->SerializeToArray(aux,i);
+			char* aux2 = (char*)malloc(i+1);
+			memset(aux2,i,i+1);
+			memcpy_s(aux2 + 1,i,aux,i);
+			_connectionsServer->sendMessage(aux2, clientId);
+			
+			//Destruir messageSend
+			delete(aux);
+			delete(aux2);
+
+			break;														
+		}
+	}
+	
+
+}
+
+CGameServer::~CGameServer(){
 
 }
 /*

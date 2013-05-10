@@ -13,7 +13,7 @@
 #include <boost\thread.hpp>
 
 class IConnectionMessagesProcessor;
-class IGameMessagesProcessor;
+class IMessagesProcessor;
 
 enum ConnectionState{
 		CONNECTED,
@@ -33,35 +33,35 @@ public:
 				_connection(connection),
 				_connectionMessagesProcessor(connectionMessagesProcessor),
 				_connectionState(CONNECTED),
-				_gameMessagesProcessor(NULL),
+				_messagesProcessor(NULL),
 				_id(id){};
 
 	CClientConnection(SOCKET connection, IConnectionMessagesProcessor* connectionMessagesProcessor):
 				_connection(connection),
 				_connectionMessagesProcessor(connectionMessagesProcessor),
 				_connectionState(CONNECTED),
-				_gameMessagesProcessor(NULL)
+				_messagesProcessor(NULL)
 				{};
 
-	CClientConnection(SOCKET connection, IConnectionMessagesProcessor* connectionMessagesProcessor, IGameMessagesProcessor* gameMessagesProcessor, int id): 
+	CClientConnection(SOCKET connection, IConnectionMessagesProcessor* connectionMessagesProcessor, IMessagesProcessor* messagesProcessor, int id): 
 				_connection(connection),
 				_connectionMessagesProcessor(connectionMessagesProcessor),
 				_connectionState(CONNECTED),
-				_gameMessagesProcessor(gameMessagesProcessor),
+				_messagesProcessor(messagesProcessor),
 				_id(id){};
 
-	CClientConnection(SOCKET connection, IConnectionMessagesProcessor* connectionMessagesProcessor, IGameMessagesProcessor* gameMessagesProcessor):
+	CClientConnection(SOCKET connection, IConnectionMessagesProcessor* connectionMessagesProcessor, IMessagesProcessor* messagesProcessor):
 				_connection(connection),
 				_connectionMessagesProcessor(connectionMessagesProcessor),
 				_connectionState(CONNECTED),
-				_gameMessagesProcessor(gameMessagesProcessor)
+				_messagesProcessor(messagesProcessor)
 				{};
 
 	int getId() {return _id;}
 
 	void setId(int id);
 
-	void sendMessage(std::string message);
+	void sendMessage(const char* message);
 
 	ConnectionState getConnectionState(){ return _connectionState; }
 
@@ -75,7 +75,7 @@ private:
 
 	IConnectionMessagesProcessor* _connectionMessagesProcessor;
 
-	IGameMessagesProcessor* _gameMessagesProcessor;
+	IMessagesProcessor* _messagesProcessor;
 
 	SOCKET _connection;
 

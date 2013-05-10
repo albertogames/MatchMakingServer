@@ -78,13 +78,13 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\dependencies\include;..\dependencies\include\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\dependencies\include\google;..\dependencies\include;..\dependencies\include\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\dependencies\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libboost_thread-vc100-mt-gd-1_53.lib;libboost_thread-vc100-mt-1_53.lib;libboost_date_time-vc100-mt-gd-1_53.lib;libboost_date_time-vc100-mt-1_53.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libboost_thread-vc100-mt-gd-1_53.lib;libboost_thread-vc100-mt-1_53.lib;libboost_date_time-vc100-mt-gd-1_53.lib;libboost_date_time-vc100-mt-1_53.lib;libprotobuf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -135,6 +135,10 @@
     <ClInclude Include="GameServer.h" />
     <ClInclude Include="GameMessagesProcessor.h" />
     <ClInclude Include="ConnectionsServer.h" />
+    <ClInclude Include="messages.pb.h" />
+    <ClInclude Include="MessagesProcessor.h" />
+    <ClInclude Include="Serializable.h" />
+    <ClInclude Include="Serializer.h" />
     <ClInclude Include="Thread.h" />
   </ItemGroup>
   <ItemGroup>
@@ -144,6 +148,9 @@
     <ClCompile Include="GameServer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ConnectionsServer.cpp" />
+    <ClCompile Include="messages.pb.cc" />
+    <ClCompile Include="Serializable.cpp" />
+    <ClCompile Include="Serializer.cpp" />
     <ClCompile Include="Thread.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

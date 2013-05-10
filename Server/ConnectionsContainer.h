@@ -1,11 +1,14 @@
-#include <boost\thread\lock_types.hpp>
 #include <boost\container\list.hpp>
 #include <boost\ptr_container\ptr_map.hpp>
 
+#include <boost/thread.hpp>
+#include <boost/thread/mutex.hpp>
+#include <boost/thread/condition.hpp>
+
+#include "ClientConnection.h"
+
 #ifndef __ConnectionsContainer_H
 #define __ConnectionsContainer_H
-
-class CClientConnection;
 
 class CConnectionsContainer{
 
@@ -30,6 +33,8 @@ private:
 	clientConnections_type _clientConnections;
 
 	boost::container::list<int> _freePositions;
+
+	boost::mutex _mutex;
 
 };
 

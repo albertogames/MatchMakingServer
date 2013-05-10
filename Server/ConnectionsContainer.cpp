@@ -3,6 +3,8 @@
 
 int CConnectionsContainer::insert(CClientConnection* clientConnection){
 	int id;
+		
+	boost::lock_guard<boost::mutex> lock(_mutex);
 
 		if (_freePositions.size() == 0){
 			id = _clientConnections.size();
@@ -18,6 +20,7 @@ int CConnectionsContainer::insert(CClientConnection* clientConnection){
 }
 
 void CConnectionsContainer::erase(int id){
+	boost::lock_guard<boost::mutex> lock(_mutex);
 
 	_clientConnections.erase(id);
 	_freePositions.push_back(id);
@@ -25,10 +28,11 @@ void CConnectionsContainer::erase(int id){
 }
 
 CClientConnection* CConnectionsContainer::get(int id){
-	
+	boost::lock_guard<boost::mutex> lock(_mutex);
 	return &_clientConnections.at(id);
 }
 
 void CConnectionsContainer::run(int id){
+	boost::lock_guard<boost::mutex> lock(_mutex);
 	_clientConnections.at(id).run();
 }

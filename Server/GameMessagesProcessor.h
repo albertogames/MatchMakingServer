@@ -4,7 +4,7 @@
 class IGameMessagesProcessor{
 
 public:
-	virtual void processGameMessage() = 0;
+	virtual void processGameMessage(char* message, int clientId) = 0;
 };
 
 #endif 

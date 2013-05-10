@@ -2,6 +2,8 @@
 #include "ConnectionMessage.h"
 #include "ConnectionsContainer.h"
 #include "GameMessagesProcessor.h"
+#include "ConnectionMessage.h"
+#include "ClientConnection.h"
 
 #include <assert.h>
 
@@ -46,7 +48,7 @@ void CConnectionsServer::run(){
 			{	
 				if (_sConnect != INVALID_SOCKET){
 
-					id = _connectionsContainer->insert(new CClientConnection(_sConnect,this));
+					id = _connectionsContainer->insert(new CClientConnection(_sConnect,this,this));
 					
 					_connectionsContainer->run(id);
 
@@ -90,11 +92,16 @@ void CConnectionsServer::processConnectionMessage(CConnectionMessage* connection
 	delete(connectionMessage);
 }
 
-void CConnectionsServer::processGameMessage(){
+void CConnectionsServer::processMessage(char* message, CClientConnection* clientConnection){
 
 	if (_gameMessagesProcessor != NULL){
-	
-		_gameMessagesProcessor->processGameMessage();
+
+		_gameMessagesProcessor->processGameMessage(message,clientConnection->getId());
 
 	}
+}
+
+void CConnectionsServer::sendMessage(const char* message, int clientId){
+
+	_connectionsContainer->get(clientId)->sendMessage(message);
 }

@@ -20,9 +20,8 @@
 #include <iostream>
 
 #include "ConnectionMessagesProcessor.h"
-#include "ClientConnection.h"
 #include "ConnectionsContainer.h"
-#include "GameMessagesProcessor.h"
+#include "MessagesProcessor.h"
 
 #include <boost\thread\thread.hpp>
 
@@ -31,11 +30,16 @@
 
 class CMEssageHandler;
 class CConnectionsContainer;
+class CClientConnection;
+class IGameMessagesProcessor;
 
-class CConnectionsServer : public IConnectionMessagesProcessor, public IGameMessagesProcessor
+class CConnectionsServer : public IConnectionMessagesProcessor, public IMessagesProcessor
 {
 
 public:
+
+	CConnectionsServer(){};
+
 	virtual ~CConnectionsServer(){};
 
 	CConnectionsServer(char* ip, int port, int maxConn):_ip(ip),
@@ -73,7 +77,8 @@ public:
 
 
 	virtual void processConnectionMessage(CConnectionMessage* connectionMessage);
-	virtual void processGameMessage();
+	virtual void processMessage(char* message, CClientConnection* _clientConnection);
+	virtual void sendMessage(const char* message, int clientId);
 
 	void run();
 	

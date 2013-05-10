@@ -1,23 +1,26 @@
 //Standar headers for a console application
 
+#include <iostream>
+#include "GameMessagesProcessor.h"
+#include <boost\container\list.hpp>
+
 #ifndef __GameServer_H
 #define __GameServer_H
 
-#include "ConnectionsServer.h"
-#include "GameMessagesProcessor.h"
-
-class CGameConnectionMessage;
 class CConnectionsServer;
+class CClientConnection;
 
 class CGameServer : public IGameMessagesProcessor
 {
 
 public:
-	virtual ~CGameServer(){};
+	virtual ~CGameServer();
 
 	CGameServer(char* ip, int port, int maxConn);
 	
-	virtual void processGameMessage();
+	virtual void processGameMessage(char* message, int clientId);
+
+	void run();
 
 private:
 
@@ -34,7 +37,6 @@ private:
 	clientConnectionsDISp_type _clientConnectionsDISP;
 
 	CConnectionsServer* _connectionsServer;
-
 };
 
 

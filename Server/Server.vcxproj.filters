@@ -43,8 +43,14 @@
     <Filter Include="General\Server\Thread">
       <UniqueIdentifier>{aa485d46-c6c8-4aec-9ae0-69caa8ddfc2e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="General\Server\ConnectionMessage">
+    <Filter Include="General\Server\ConnectionMessages">
       <UniqueIdentifier>{ff5a1500-dc73-4aee-ba83-354d3f96ebf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Serializer">
+      <UniqueIdentifier>{8dad591b-c81c-48b6-ae00-45ceebcaa75f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\GameMessages">
+      <UniqueIdentifier>{2807b240-89c2-4dce-a99b-17176720c0fd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -58,7 +64,7 @@
       <Filter>General\Server\Thread</Filter>
     </ClInclude>
     <ClInclude Include="ConnectionMessage.h">
-      <Filter>General\Server\ConnectionMessage</Filter>
+      <Filter>General\Server\ConnectionMessages</Filter>
     </ClInclude>
     <ClInclude Include="ConnectionsContainer.h">
       <Filter>General\Server\ConnectionsContainer</Filter>
@@ -70,9 +76,21 @@
       <Filter>Game\GameServer</Filter>
     </ClInclude>
     <ClInclude Include="ConnectionMessagesProcessor.h">
-      <Filter>General\Server\ConnectionMessage</Filter>
+      <Filter>General\Server\ConnectionMessages</Filter>
     </ClInclude>
     <ClInclude Include="ConnectionsServer.h">
+      <Filter>General\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="Serializer.h">
+      <Filter>Game\Serializer</Filter>
+    </ClInclude>
+    <ClInclude Include="Serializable.h">
+      <Filter>Game\Serializer</Filter>
+    </ClInclude>
+    <ClInclude Include="messages.pb.h">
+      <Filter>Game\GameMessages</Filter>
+    </ClInclude>
+    <ClInclude Include="MessagesProcessor.h">
       <Filter>General\Server</Filter>
     </ClInclude>
   </ItemGroup>
@@ -97,6 +115,15 @@
     </ClCompile>
     <ClCompile Include="ConnectionsServer.cpp">
       <Filter>General\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="Serializer.cpp">
+      <Filter>Game\Serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="Serializable.cpp">
+      <Filter>Game\Serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="messages.pb.cc">
+      <Filter>Game\GameMessages</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,3 +1,5 @@
+#include "ClientConnection.h"
+
 #ifndef __ConnectionMessage_H
 #define __ConnectionMessage_H
 
