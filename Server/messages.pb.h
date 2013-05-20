@@ -36,18 +36,19 @@ void protobuf_ShutdownFile_messages_2eproto();
 
 class Message;
 class Message_Login;
+class Message_UserAvailable;
 
 enum Message_MessageType {
   Message_MessageType_DISP_PLAY = 0,
   Message_MessageType_DISP_PLAY_CANCEL = 1,
   Message_MessageType_LOG_OK = 2,
   Message_MessageType_LOG = 3,
-  Message_MessageType_NEW_PLAYER_DISP_PLAY = 4,
-  Message_MessageType_NEW_PLAYER_DISP_PLAY_CANCEL = 5
+  Message_MessageType_USER_AVAILABLE_PLAY = 4,
+  Message_MessageType_USER_AVAILABLE_PLAY_CANCEL = 5
 };
 bool Message_MessageType_IsValid(int value);
 const Message_MessageType Message_MessageType_MessageType_MIN = Message_MessageType_DISP_PLAY;
-const Message_MessageType Message_MessageType_MessageType_MAX = Message_MessageType_NEW_PLAYER_DISP_PLAY_CANCEL;
+const Message_MessageType Message_MessageType_MessageType_MAX = Message_MessageType_USER_AVAILABLE_PLAY_CANCEL;
 const int Message_MessageType_MessageType_ARRAYSIZE = Message_MessageType_MessageType_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* Message_MessageType_descriptor();
@@ -164,6 +165,93 @@ class Message_Login : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class Message_UserAvailable : public ::google::protobuf::Message {
+ public:
+  Message_UserAvailable();
+  virtual ~Message_UserAvailable();
+
+  Message_UserAvailable(const Message_UserAvailable& from);
+
+  inline Message_UserAvailable& operator=(const Message_UserAvailable& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const Message_UserAvailable& default_instance();
+
+  void Swap(Message_UserAvailable* other);
+
+  // implements Message ----------------------------------------------
+
+  Message_UserAvailable* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const Message_UserAvailable& from);
+  void MergeFrom(const Message_UserAvailable& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string username = 1;
+  inline bool has_username() const;
+  inline void clear_username();
+  static const int kUsernameFieldNumber = 1;
+  inline const ::std::string& username() const;
+  inline void set_username(const ::std::string& value);
+  inline void set_username(const char* value);
+  inline void set_username(const char* value, size_t size);
+  inline ::std::string* mutable_username();
+  inline ::std::string* release_username();
+  inline void set_allocated_username(::std::string* username);
+
+  // @@protoc_insertion_point(class_scope:Messages.Message.UserAvailable)
+ private:
+  inline void set_has_username();
+  inline void clear_has_username();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* username_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_messages_2eproto();
+  friend void protobuf_AssignDesc_messages_2eproto();
+  friend void protobuf_ShutdownFile_messages_2eproto();
+
+  void InitAsDefaultInstance();
+  static Message_UserAvailable* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class Message : public ::google::protobuf::Message {
  public:
   Message();
@@ -217,14 +305,15 @@ class Message : public ::google::protobuf::Message {
   // nested types ----------------------------------------------------
 
   typedef Message_Login Login;
+  typedef Message_UserAvailable UserAvailable;
 
   typedef Message_MessageType MessageType;
   static const MessageType DISP_PLAY = Message_MessageType_DISP_PLAY;
   static const MessageType DISP_PLAY_CANCEL = Message_MessageType_DISP_PLAY_CANCEL;
   static const MessageType LOG_OK = Message_MessageType_LOG_OK;
   static const MessageType LOG = Message_MessageType_LOG;
-  static const MessageType NEW_PLAYER_DISP_PLAY = Message_MessageType_NEW_PLAYER_DISP_PLAY;
-  static const MessageType NEW_PLAYER_DISP_PLAY_CANCEL = Message_MessageType_NEW_PLAYER_DISP_PLAY_CANCEL;
+  static const MessageType USER_AVAILABLE_PLAY = Message_MessageType_USER_AVAILABLE_PLAY;
+  static const MessageType USER_AVAILABLE_PLAY_CANCEL = Message_MessageType_USER_AVAILABLE_PLAY_CANCEL;
   static inline bool MessageType_IsValid(int value) {
     return Message_MessageType_IsValid(value);
   }
@@ -264,20 +353,32 @@ class Message : public ::google::protobuf::Message {
   inline ::Messages::Message_Login* release_login();
   inline void set_allocated_login(::Messages::Message_Login* login);
 
+  // optional .Messages.Message.UserAvailable userAvailable = 3;
+  inline bool has_useravailable() const;
+  inline void clear_useravailable();
+  static const int kUserAvailableFieldNumber = 3;
+  inline const ::Messages::Message_UserAvailable& useravailable() const;
+  inline ::Messages::Message_UserAvailable* mutable_useravailable();
+  inline ::Messages::Message_UserAvailable* release_useravailable();
+  inline void set_allocated_useravailable(::Messages::Message_UserAvailable* useravailable);
+
   // @@protoc_insertion_point(class_scope:Messages.Message)
  private:
   inline void set_has_messagetype();
   inline void clear_has_messagetype();
   inline void set_has_login();
   inline void clear_has_login();
+  inline void set_has_useravailable();
+  inline void clear_has_useravailable();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::Messages::Message_Login* login_;
+  ::Messages::Message_UserAvailable* useravailable_;
   int messagetype_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
 
   friend void  protobuf_AddDesc_messages_2eproto();
   friend void protobuf_AssignDesc_messages_2eproto();
@@ -435,6 +536,80 @@ inline void Message_Login::set_allocated_password(::std::string* password) {
 
 // -------------------------------------------------------------------
 
+// Message_UserAvailable
+
+// required string username = 1;
+inline bool Message_UserAvailable::has_username() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void Message_UserAvailable::set_has_username() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void Message_UserAvailable::clear_has_username() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void Message_UserAvailable::clear_username() {
+  if (username_ != &::google::protobuf::internal::kEmptyString) {
+    username_->clear();
+  }
+  clear_has_username();
+}
+inline const ::std::string& Message_UserAvailable::username() const {
+  return *username_;
+}
+inline void Message_UserAvailable::set_username(const ::std::string& value) {
+  set_has_username();
+  if (username_ == &::google::protobuf::internal::kEmptyString) {
+    username_ = new ::std::string;
+  }
+  username_->assign(value);
+}
+inline void Message_UserAvailable::set_username(const char* value) {
+  set_has_username();
+  if (username_ == &::google::protobuf::internal::kEmptyString) {
+    username_ = new ::std::string;
+  }
+  username_->assign(value);
+}
+inline void Message_UserAvailable::set_username(const char* value, size_t size) {
+  set_has_username();
+  if (username_ == &::google::protobuf::internal::kEmptyString) {
+    username_ = new ::std::string;
+  }
+  username_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* Message_UserAvailable::mutable_username() {
+  set_has_username();
+  if (username_ == &::google::protobuf::internal::kEmptyString) {
+    username_ = new ::std::string;
+  }
+  return username_;
+}
+inline ::std::string* Message_UserAvailable::release_username() {
+  clear_has_username();
+  if (username_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = username_;
+    username_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void Message_UserAvailable::set_allocated_username(::std::string* username) {
+  if (username_ != &::google::protobuf::internal::kEmptyString) {
+    delete username_;
+  }
+  if (username) {
+    set_has_username();
+    username_ = username;
+  } else {
+    clear_has_username();
+    username_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
 // Message
 
 // required .Messages.Message.MessageType messageType = 1;
@@ -495,6 +670,44 @@ inline void Message::set_allocated_login(::Messages::Message_Login* login) {
     set_has_login();
   } else {
     clear_has_login();
+  }
+}
+
+// optional .Messages.Message.UserAvailable userAvailable = 3;
+inline bool Message::has_useravailable() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void Message::set_has_useravailable() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void Message::clear_has_useravailable() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void Message::clear_useravailable() {
+  if (useravailable_ != NULL) useravailable_->::Messages::Message_UserAvailable::Clear();
+  clear_has_useravailable();
+}
+inline const ::Messages::Message_UserAvailable& Message::useravailable() const {
+  return useravailable_ != NULL ? *useravailable_ : *default_instance_->useravailable_;
+}
+inline ::Messages::Message_UserAvailable* Message::mutable_useravailable() {
+  set_has_useravailable();
+  if (useravailable_ == NULL) useravailable_ = new ::Messages::Message_UserAvailable;
+  return useravailable_;
+}
+inline ::Messages::Message_UserAvailable* Message::release_useravailable() {
+  clear_has_useravailable();
+  ::Messages::Message_UserAvailable* temp = useravailable_;
+  useravailable_ = NULL;
+  return temp;
+}
+inline void Message::set_allocated_useravailable(::Messages::Message_UserAvailable* useravailable) {
+  delete useravailable_;
+  useravailable_ = useravailable;
+  if (useravailable) {
+    set_has_useravailable();
+  } else {
+    clear_has_useravailable();
   }
 }
 
