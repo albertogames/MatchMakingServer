@@ -61,7 +61,7 @@ public:
 
 	void setId(int id);
 
-	void sendMessage(const char* message);
+	void sendMessage(int size, const char* message);
 
 	ConnectionState getConnectionState(){ return _connectionState; }
 

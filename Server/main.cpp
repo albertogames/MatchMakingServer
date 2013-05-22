@@ -5,5 +5,5 @@ using namespace std;
 
 int main()
 {
-	CGameServer* server = new CGameServer("127.0.0.1",9999,128);
+	CGameServer* server = new CGameServer("192.168.1.102",9999,128);
 }

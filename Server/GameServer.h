@@ -28,11 +28,9 @@ private:
 
 	void notifyNewPlayer(std::string user);
 
-	void notifyPlayers(std::string message, std::string user);
+	void sendPlayersToNewPlayer(int clientId, std::string user);
 
-	void sendPlayersToNewPlayer(CClientConnection *client, std::string user);
-
-	typedef boost::container::list<CClientConnection*> clientConnectionsDISp_type;
+	typedef boost::container::list<int> clientConnectionsDISp_type;
 	
 	clientConnectionsDISp_type _clientConnectionsDISP;
 

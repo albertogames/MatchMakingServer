@@ -7,7 +7,7 @@ class IMessagesProcessor{
 
 public:
 	virtual void processMessage(char* message, CClientConnection* clientConnection) = 0;
-	virtual void sendMessage(const char* message, int clientId) = 0;
+	virtual void sendMessage(int size,const char* message, int clientId) = 0;
 };
 
 #endif 

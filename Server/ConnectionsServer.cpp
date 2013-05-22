@@ -101,7 +101,7 @@ void CConnectionsServer::processMessage(char* message, CClientConnection* client
 	}
 }
 
-void CConnectionsServer::sendMessage(const char* message, int clientId){
+void CConnectionsServer::sendMessage(int size, const char* message, int clientId){
 
-	_connectionsContainer->get(clientId)->sendMessage(message);
+	_connectionsContainer->get(clientId)->sendMessage(size, message);
 }

@@ -139,10 +139,10 @@ void CClientConnection::closeConnection(){
 	}
 }
 
-void CClientConnection::sendMessage(const char* message)
+void CClientConnection::sendMessage(int size, const char* message)
 {
 
-	int errorCode = send(_connection,message,strlen(message),NULL);
+	int errorCode = send(_connection,message,size,NULL);
 
 	if (errorCode == SOCKET_ERROR){
 		std::cout << "ERROR ClientConnection.sendMessage : send(): " << WSAGetLastError() << std::endl;
