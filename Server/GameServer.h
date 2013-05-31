@@ -1,8 +1,17 @@
 //Standar headers for a console application
 
+#include <string.h>
 #include <iostream>
+#include <utility>
 #include "GameMessagesProcessor.h"
+#include "GamePlayersContainer.h"
+
 #include <boost\container\list.hpp>
+#include <boost\container\map.hpp>
+
+#include <boost\ptr_container\ptr_map.hpp>
+
+
 
 #ifndef __GameServer_H
 #define __GameServer_H
@@ -18,7 +27,8 @@ public:
 
 	CGameServer(char* ip, int port, int maxConn);
 	
-	virtual void processGameMessage(char* message, int clientId);
+	virtual void processGameMessage(char* message,int messageSize, int clientId);
+	virtual void clientDisconnected(int clientId);
 
 	void run();
 
@@ -35,6 +45,11 @@ private:
 	clientConnectionsDISp_type _clientConnectionsDISP;
 
 	CConnectionsServer* _connectionsServer;
+
+	boost::container::map<int,std::string> _clients;
+
+	CGamePlayersContainer* _playersContainer;
+	CGamePlayersContainer* _playersAvailable;
 };
 
 

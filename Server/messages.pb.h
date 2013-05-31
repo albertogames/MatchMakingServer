@@ -38,12 +38,12 @@ class Message;
 class Message_Login;
 
 enum Message_MessageType {
-  Message_MessageType_DISP_PLAY = 0,
-  Message_MessageType_DISP_PLAY_CANCEL = 1,
-  Message_MessageType_LOG_OK = 2,
-  Message_MessageType_LOG = 3,
-  Message_MessageType_USER_AVAILABLE_PLAY = 4,
-  Message_MessageType_USER_AVAILABLE_PLAY_CANCEL = 5
+  Message_MessageType_DISP_PLAY = 1,
+  Message_MessageType_DISP_PLAY_CANCEL = 2,
+  Message_MessageType_LOG_OK = 3,
+  Message_MessageType_LOG = 4,
+  Message_MessageType_USER_AVAILABLE_PLAY = 5,
+  Message_MessageType_USER_AVAILABLE_PLAY_CANCEL = 6
 };
 bool Message_MessageType_IsValid(int value);
 const Message_MessageType Message_MessageType_MessageType_MIN = Message_MessageType_DISP_PLAY;
@@ -378,7 +378,7 @@ inline void Message::clear_has_messagetype() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void Message::clear_messagetype() {
-  messagetype_ = 0;
+  messagetype_ = 1;
   clear_has_messagetype();
 }
 inline ::Messages::Message_MessageType Message::messagetype() const {

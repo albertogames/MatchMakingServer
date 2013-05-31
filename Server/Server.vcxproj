@@ -132,6 +132,8 @@
     <ClInclude Include="Constants.h" />
     <ClInclude Include="ConnectionMessagesProcessor.h" />
     <ClInclude Include="ConnectionMessage.h" />
+    <ClInclude Include="GamePlayer.h" />
+    <ClInclude Include="GamePlayersContainer.h" />
     <ClInclude Include="GameServer.h" />
     <ClInclude Include="GameMessagesProcessor.h" />
     <ClInclude Include="ConnectionsServer.h" />
@@ -145,6 +147,7 @@
     <ClCompile Include="ClientConnection.cpp" />
     <ClCompile Include="ConnectionsContainer.cpp" />
     <ClCompile Include="Constants.cpp" />
+    <ClCompile Include="GamePlayersContainer.cpp" />
     <ClCompile Include="GameServer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ConnectionsServer.cpp" />

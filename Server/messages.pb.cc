@@ -109,9 +109,9 @@ void protobuf_AddDesc_messages_2eproto() {
     "essageType\022\020\n\010username\030\002 \001(\t\022&\n\005login\030\003 "
     "\001(\0132\027.Messages.Message.Login\032\031\n\005Login\022\020\n"
     "\010password\030\001 \002(\t\"\200\001\n\013MessageType\022\r\n\tDISP_"
-    "PLAY\020\000\022\024\n\020DISP_PLAY_CANCEL\020\001\022\n\n\006LOG_OK\020\002"
-    "\022\007\n\003LOG\020\003\022\027\n\023USER_AVAILABLE_PLAY\020\004\022\036\n\032US"
-    "ER_AVAILABLE_PLAY_CANCEL\020\005", 306);
+    "PLAY\020\001\022\024\n\020DISP_PLAY_CANCEL\020\002\022\n\n\006LOG_OK\020\003"
+    "\022\007\n\003LOG\020\004\022\027\n\023USER_AVAILABLE_PLAY\020\005\022\036\n\032US"
+    "ER_AVAILABLE_PLAY_CANCEL\020\006", 306);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "messages.proto", &protobuf_RegisterTypes);
   Message::default_instance_ = new Message();
@@ -136,12 +136,12 @@ const ::google::protobuf::EnumDescriptor* Message_MessageType_descriptor() {
 }
 bool Message_MessageType_IsValid(int value) {
   switch(value) {
-    case 0:
     case 1:
     case 2:
     case 3:
     case 4:
     case 5:
+    case 6:
       return true;
     default:
       return false;
@@ -408,7 +408,7 @@ Message::Message(const Message& from)
 
 void Message::SharedCtor() {
   _cached_size_ = 0;
-  messagetype_ = 0;
+  messagetype_ = 1;
   username_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   login_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -450,7 +450,7 @@ Message* Message::New() const {
 
 void Message::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    messagetype_ = 0;
+    messagetype_ = 1;
     if (has_username()) {
       if (username_ != &::google::protobuf::internal::kEmptyString) {
         username_->clear();

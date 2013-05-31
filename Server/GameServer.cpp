@@ -7,17 +7,18 @@
 
 CGameServer::CGameServer(char* ip, int port, int maxConn){
 	
-	_connectionsServer = new CConnectionsServer(ip,port,maxConn,this);
+	_playersContainer = new CGamePlayersContainer();
 
+	_connectionsServer = new CConnectionsServer(ip,port,maxConn,this);
 	_connectionsServer->run();
 	
 }
 
-void CGameServer::processGameMessage(char* message, int clientId){
+void CGameServer::processGameMessage(char* message,int messageSize, int clientId){
 
 	
 	Messages::Message msg;
-	msg.ParseFromArray(message,strlen(message));
+	msg.ParseFromArray(message,messageSize);
 	
 	Messages::Message_MessageType messageType = msg.messagetype();
 
@@ -29,6 +30,10 @@ void CGameServer::processGameMessage(char* message, int clientId){
 
 			Messages::Message* messageSend = new Messages::Message();
 			messageSend->set_messagetype(Messages::Message_MessageType::Message_MessageType_LOG_OK);
+
+			CGamePlayer* gp = new CGamePlayer("",clientId,msg.username());
+	
+			_playersContainer->insert(clientId,gp);
 
 			int i = messageSend->ByteSize();
 			char* aux = (char*)malloc(i);
@@ -72,7 +77,21 @@ void CGameServer::processGameMessage(char* message, int clientId){
 
 }
 
+void CGameServer::clientDisconnected(int clientId){
+	CGamePlayer* gp = _playersContainer->get(clientId);
+	std::string user = _playersContainer->get(clientId)->getUser();
+	
+	_clientConnectionsDISP.remove(clientId);
+			
+	_playersContainer->eraseDelete(clientId);
+
+	notifyExitPlayer(user);
+	
+}
+
 void CGameServer::notifyNewPlayer(std::string user){
+	
+	std::cout << "NOTIFY NEW PLAYER: " << user << "\n";
 	
 	Messages::Message* messageSend = new Messages::Message();
 	messageSend->set_messagetype(Messages::Message_MessageType_USER_AVAILABLE_PLAY);
@@ -90,6 +109,9 @@ void CGameServer::notifyNewPlayer(std::string user){
 
 
 	for (it = _clientConnectionsDISP.begin() ; it != _clientConnectionsDISP.end() ; it++){
+		
+		std::cout << "NOTIFY "<< user  << " to " << *it << ":" << _playersContainer->get(*it)->getUser()  << "\n";
+		
 		_connectionsServer->sendMessage(i + 1,aux2, (*it));
 	}	
 
@@ -101,6 +123,8 @@ void CGameServer::notifyNewPlayer(std::string user){
 }
 
 void CGameServer::notifyExitPlayer(std::string user){
+	
+	std::cout << "NOTIFY EXIT PLAYER: " << user << "\n";
 	
 	Messages::Message* messageSend = new Messages::Message();
 	messageSend->set_messagetype(Messages::Message_MessageType_USER_AVAILABLE_PLAY_CANCEL);
@@ -118,6 +142,9 @@ void CGameServer::notifyExitPlayer(std::string user){
 
 
 	for (it = _clientConnectionsDISP.begin() ; it != _clientConnectionsDISP.end() ; it++){
+		
+		std::cout << "NOTIFY "<< user  << " to " << *it << ":" << _playersContainer->get(*it)->getUser() << "\n";
+		
 		_connectionsServer->sendMessage(i + 1,aux2, (*it));
 	}	
 
@@ -130,15 +157,19 @@ void CGameServer::notifyExitPlayer(std::string user){
 
 
 void CGameServer::sendPlayersToNewPlayer(int clientId, std::string user){
-
+	
+	std::cout << "SEND PLAYERS TO NEW PLAYER: " << clientId << ":" << user << "\n";
+	
 	clientConnectionsDISp_type::iterator it;
 	Messages::Message* messageSend = new Messages::Message();
 	messageSend->set_messagetype(Messages::Message_MessageType_USER_AVAILABLE_PLAY);
 	
 
 	for (it = _clientConnectionsDISP.begin() ; it != _clientConnectionsDISP.end() ; it++){
-		
-		messageSend->set_username(user);
+	
+		std::cout << "SEND PLAYER: " << *it << ":" << _playersContainer->get(*it)->getUser() << " to " << clientId << ":" << user << "\n"; 
+
+		messageSend->set_username(_playersContainer->get(*it)->getUser());
 
 		int i = messageSend->ByteSize();
 		char* aux = (char*)malloc(i);
@@ -162,87 +193,3 @@ void CGameServer::sendPlayersToNewPlayer(int clientId, std::string user){
 CGameServer::~CGameServer(){
 
 }
-/*
-void CGameServer::sendGameMessage(CGameConnectionMessage* message)
-{
-	int id = message->getGameClientConnection()->getId() ;
-	std::cout << "Client: " << id << " CODE: " << message->getMessageCode() << std::endl;
-	
-	switch (message->getMessageCode()){
-
-		case DISP_PLAY:{
-			int id = message->getClientConnection()->getId();
-
-			_clientConnectionsDISP.push_back(message->getClientConnection());
-
-			sendPlayersToNewPlayer(message->getClientConnection(),message->getClientConnection()->getUserName());
-
-			notifyNewPlayer(message->getClientConnection()->getUserName());
-
-			break;			   
-		}
-
-		case DISP_PLAY_CANCEL:{
-
-			_clientConnectionsDISP.remove(message->getClientConnection());
-
-			notifyExitPlayer(message->getClientConnection()->getUserName());
-
-			break;
-		}
-
-	}
-
-	delete(message);
-}
-
-void CGameServer::notifyExitPlayer(std::string user){
-	std::string message ="";
-
-	message += Constants::COM_DISP_PLAY_CANCEL;
-	message += Constants::PARSER_CHAR;
-	message += user;
-	message += Constants::PARSER_CHAR;
-
-	notifyPlayers(message,user);
-}
-void CGameServer::notifyNewPlayer(std::string user){
-	
-	std::string message ="";
-
-	message += Constants::COM_NEW_PLAYER;
-	message += Constants::PARSER_CHAR;
-	message += user;
-	message += Constants::PARSER_CHAR;
-
-	notifyPlayers(message,user);	
-}
-
-void CGameServer::sendPlayersToNewPlayer(CClientConnection *client, std::string user){
-
-	clientConnectionsDISp_type::iterator it;
-	for (it = _clientConnectionsDISP.begin() ; it != _clientConnectionsDISP.end() ; it++){
-		if ((*it)->getUserName().compare(user) != 0){
-			std::string message ="";
-
-			message += Constants::COM_NEW_PLAYER;
-			message += Constants::PARSER_CHAR;
-			message += (*it)->getUserName();
-			message += Constants::PARSER_CHAR;
-
-			client->sendMessage(message);
-		}
-	}
-
-}
-
- void CGameServer::notifyPlayers(std::string message, std::string user){
-
-	clientConnectionsDISp_type::iterator it;
-	for (it = _clientConnectionsDISP.begin() ; it != _clientConnectionsDISP.end() ; it++){
-		if ((*it)->getUserName().compare(user) != 0){
-			(*it)->sendMessage(message);
-		}
-	}
-
- }*/

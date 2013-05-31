@@ -24,7 +24,9 @@ public:
 
 	CClientConnection* get(int id);
 
-	void run(int it);
+	void run(int id);
+
+	void stop(int id);
 
 
 private:

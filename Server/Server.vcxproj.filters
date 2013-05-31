@@ -37,9 +37,6 @@
     <Filter Include="General\Server\ConnectionsContainer">
       <UniqueIdentifier>{4a45eac5-fdf1-49bd-bfe3-ac455ba43c14}</UniqueIdentifier>
     </Filter>
-    <Filter Include="General\Server\ConnectionsContainer\ClientConnection">
-      <UniqueIdentifier>{67314121-0d00-4b0d-8d5e-535ff4678e32}</UniqueIdentifier>
-    </Filter>
     <Filter Include="General\Server\Thread">
       <UniqueIdentifier>{aa485d46-c6c8-4aec-9ae0-69caa8ddfc2e}</UniqueIdentifier>
     </Filter>
@@ -52,13 +49,22 @@
     <Filter Include="Game\GameMessages">
       <UniqueIdentifier>{2807b240-89c2-4dce-a99b-17176720c0fd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\GamePlayer">
+      <UniqueIdentifier>{dd8b3e53-f3c7-414b-bd80-aa00e25ab01f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="General\Server\ClientConnection">
+      <UniqueIdentifier>{67314121-0d00-4b0d-8d5e-535ff4678e32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\GamePlayersContainer">
+      <UniqueIdentifier>{5668f263-aa82-4f21-90e4-392405e20a66}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Constants.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="ClientConnection.h">
-      <Filter>General\Server\ConnectionsContainer\ClientConnection</Filter>
+      <Filter>General\Server\ClientConnection</Filter>
     </ClInclude>
     <ClInclude Include="Thread.h">
       <Filter>General\Server\Thread</Filter>
@@ -93,6 +99,12 @@
     <ClInclude Include="MessagesProcessor.h">
       <Filter>General\Server</Filter>
     </ClInclude>
+    <ClInclude Include="GamePlayer.h">
+      <Filter>Game\GamePlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePlayersContainer.h">
+      <Filter>Game\GamePlayersContainer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -102,7 +114,7 @@
       <Filter>Archivos de recursos</Filter>
     </ClCompile>
     <ClCompile Include="ClientConnection.cpp">
-      <Filter>General\Server\ConnectionsContainer\ClientConnection</Filter>
+      <Filter>General\Server\ClientConnection</Filter>
     </ClCompile>
     <ClCompile Include="Thread.cpp">
       <Filter>General\Server\Thread</Filter>
@@ -124,6 +136,9 @@
     </ClCompile>
     <ClCompile Include="messages.pb.cc">
       <Filter>Game\GameMessages</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePlayersContainer.cpp">
+      <Filter>Game\GamePlayersContainer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

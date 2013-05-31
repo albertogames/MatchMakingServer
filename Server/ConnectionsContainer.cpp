@@ -36,3 +36,8 @@ void CConnectionsContainer::run(int id){
 	boost::lock_guard<boost::mutex> lock(_mutex);
 	_clientConnections.at(id).run();
 }
+
+void CConnectionsContainer::stop(int id){
+	boost::lock_guard<boost::mutex> lock(_mutex);
+	_clientConnections.at(id).stop();
+}

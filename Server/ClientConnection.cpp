@@ -53,10 +53,10 @@ void CClientConnection::startThread()
 
 					//ENVIAR EL MENSAJE
 					if (_messagesProcessor != NULL){
-						_messagesProcessor->processMessage(buffer, this);
+						_messagesProcessor->processMessage(buffer,messageSize, this);
 					}
 
-					delete(buffer);
+					free(buffer);
 
 					bytesReceived -= messageBytesLeft;
 					
@@ -89,11 +89,11 @@ void CClientConnection::startThread()
 					memcpy(buffer, message+1+offSet, messageSize);
 
 					if (_messagesProcessor != NULL){
-						_messagesProcessor->processMessage(buffer, this);
+						_messagesProcessor->processMessage(buffer, messageSize, this);
 					}
-					delete(buffer);
+					free(buffer);
 
-					strcpy(buffer,"");
+					//strcpy(buffer,"");
 							
 					bytesReceived -= messageSize + 1;
 

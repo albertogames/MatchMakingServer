@@ -82,7 +82,13 @@ void CConnectionsServer::processConnectionMessage(CConnectionMessage* connection
 			_connectionsContainer->erase(id);
 
 			std::cout << "Client: " << id << " desconectado "<< std::endl;
-	
+		
+			if (_gameMessagesProcessor != NULL){
+
+				_gameMessagesProcessor->clientDisconnected(id);
+
+			}
+
 			break;
 		
 		}	
@@ -92,11 +98,11 @@ void CConnectionsServer::processConnectionMessage(CConnectionMessage* connection
 	delete(connectionMessage);
 }
 
-void CConnectionsServer::processMessage(char* message, CClientConnection* clientConnection){
+void CConnectionsServer::processMessage(char* message,int messageSize, CClientConnection* clientConnection){
 
 	if (_gameMessagesProcessor != NULL){
 
-		_gameMessagesProcessor->processGameMessage(message,clientConnection->getId());
+		_gameMessagesProcessor->processGameMessage(message,messageSize,clientConnection->getId());
 
 	}
 }

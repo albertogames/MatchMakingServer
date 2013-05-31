@@ -77,7 +77,7 @@ public:
 
 
 	virtual void processConnectionMessage(CConnectionMessage* connectionMessage);
-	virtual void processMessage(char* message, CClientConnection* _clientConnection);
+	virtual void processMessage(char* message, int messageSize, CClientConnection* _clientConnection);
 	virtual void sendMessage(int size, const char* message, int clientId);
 
 	void run();
