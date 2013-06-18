@@ -43,11 +43,15 @@ enum Message_MessageType {
   Message_MessageType_LOG_OK = 3,
   Message_MessageType_LOG = 4,
   Message_MessageType_USER_AVAILABLE_PLAY = 5,
-  Message_MessageType_USER_AVAILABLE_PLAY_CANCEL = 6
+  Message_MessageType_USER_AVAILABLE_PLAY_CANCEL = 6,
+  Message_MessageType_PLAY_REQUEST = 7,
+  Message_MessageType_PLAY_REQUEST_OK = 8,
+  Message_MessageType_PLAY_REQUEST_CANCEL = 9,
+  Message_MessageType_PLAYER_DOWN = 10
 };
 bool Message_MessageType_IsValid(int value);
 const Message_MessageType Message_MessageType_MessageType_MIN = Message_MessageType_DISP_PLAY;
-const Message_MessageType Message_MessageType_MessageType_MAX = Message_MessageType_USER_AVAILABLE_PLAY_CANCEL;
+const Message_MessageType Message_MessageType_MessageType_MAX = Message_MessageType_PLAYER_DOWN;
 const int Message_MessageType_MessageType_ARRAYSIZE = Message_MessageType_MessageType_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* Message_MessageType_descriptor();
@@ -116,10 +120,22 @@ class Message_Login : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string password = 1;
+  // required string username = 1;
+  inline bool has_username() const;
+  inline void clear_username();
+  static const int kUsernameFieldNumber = 1;
+  inline const ::std::string& username() const;
+  inline void set_username(const ::std::string& value);
+  inline void set_username(const char* value);
+  inline void set_username(const char* value, size_t size);
+  inline ::std::string* mutable_username();
+  inline ::std::string* release_username();
+  inline void set_allocated_username(::std::string* username);
+
+  // required string password = 2;
   inline bool has_password() const;
   inline void clear_password();
-  static const int kPasswordFieldNumber = 1;
+  static const int kPasswordFieldNumber = 2;
   inline const ::std::string& password() const;
   inline void set_password(const ::std::string& value);
   inline void set_password(const char* value);
@@ -128,17 +144,35 @@ class Message_Login : public ::google::protobuf::Message {
   inline ::std::string* release_password();
   inline void set_allocated_password(::std::string* password);
 
+  // required string ip = 3;
+  inline bool has_ip() const;
+  inline void clear_ip();
+  static const int kIpFieldNumber = 3;
+  inline const ::std::string& ip() const;
+  inline void set_ip(const ::std::string& value);
+  inline void set_ip(const char* value);
+  inline void set_ip(const char* value, size_t size);
+  inline ::std::string* mutable_ip();
+  inline ::std::string* release_ip();
+  inline void set_allocated_ip(::std::string* ip);
+
   // @@protoc_insertion_point(class_scope:Messages.Message.Login)
  private:
+  inline void set_has_username();
+  inline void clear_has_username();
   inline void set_has_password();
   inline void clear_has_password();
+  inline void set_has_ip();
+  inline void clear_has_ip();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::std::string* username_;
   ::std::string* password_;
+  ::std::string* ip_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
 
   friend void  protobuf_AddDesc_messages_2eproto();
   friend void protobuf_AssignDesc_messages_2eproto();
@@ -210,6 +244,10 @@ class Message : public ::google::protobuf::Message {
   static const MessageType LOG = Message_MessageType_LOG;
   static const MessageType USER_AVAILABLE_PLAY = Message_MessageType_USER_AVAILABLE_PLAY;
   static const MessageType USER_AVAILABLE_PLAY_CANCEL = Message_MessageType_USER_AVAILABLE_PLAY_CANCEL;
+  static const MessageType PLAY_REQUEST = Message_MessageType_PLAY_REQUEST;
+  static const MessageType PLAY_REQUEST_OK = Message_MessageType_PLAY_REQUEST_OK;
+  static const MessageType PLAY_REQUEST_CANCEL = Message_MessageType_PLAY_REQUEST_CANCEL;
+  static const MessageType PLAYER_DOWN = Message_MessageType_PLAYER_DOWN;
   static inline bool MessageType_IsValid(int value) {
     return Message_MessageType_IsValid(value);
   }
@@ -240,10 +278,17 @@ class Message : public ::google::protobuf::Message {
   inline ::Messages::Message_MessageType messagetype() const;
   inline void set_messagetype(::Messages::Message_MessageType value);
 
-  // optional string username = 2;
+  // optional int64 connectionId = 2;
+  inline bool has_connectionid() const;
+  inline void clear_connectionid();
+  static const int kConnectionIdFieldNumber = 2;
+  inline ::google::protobuf::int64 connectionid() const;
+  inline void set_connectionid(::google::protobuf::int64 value);
+
+  // optional string username = 3;
   inline bool has_username() const;
   inline void clear_username();
-  static const int kUsernameFieldNumber = 2;
+  static const int kUsernameFieldNumber = 3;
   inline const ::std::string& username() const;
   inline void set_username(const ::std::string& value);
   inline void set_username(const char* value);
@@ -252,10 +297,10 @@ class Message : public ::google::protobuf::Message {
   inline ::std::string* release_username();
   inline void set_allocated_username(::std::string* username);
 
-  // optional .Messages.Message.Login login = 3;
+  // optional .Messages.Message.Login login = 4;
   inline bool has_login() const;
   inline void clear_login();
-  static const int kLoginFieldNumber = 3;
+  static const int kLoginFieldNumber = 4;
   inline const ::Messages::Message_Login& login() const;
   inline ::Messages::Message_Login* mutable_login();
   inline ::Messages::Message_Login* release_login();
@@ -265,6 +310,8 @@ class Message : public ::google::protobuf::Message {
  private:
   inline void set_has_messagetype();
   inline void clear_has_messagetype();
+  inline void set_has_connectionid();
+  inline void clear_has_connectionid();
   inline void set_has_username();
   inline void clear_has_username();
   inline void set_has_login();
@@ -272,12 +319,13 @@ class Message : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::google::protobuf::int64 connectionid_;
   ::std::string* username_;
   ::Messages::Message_Login* login_;
   int messagetype_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
 
   friend void  protobuf_AddDesc_messages_2eproto();
   friend void protobuf_AssignDesc_messages_2eproto();
@@ -293,15 +341,85 @@ class Message : public ::google::protobuf::Message {
 
 // Message_Login
 
-// required string password = 1;
-inline bool Message_Login::has_password() const {
+// required string username = 1;
+inline bool Message_Login::has_username() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void Message_Login::set_has_password() {
+inline void Message_Login::set_has_username() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void Message_Login::clear_has_password() {
+inline void Message_Login::clear_has_username() {
   _has_bits_[0] &= ~0x00000001u;
+}
+inline void Message_Login::clear_username() {
+  if (username_ != &::google::protobuf::internal::kEmptyString) {
+    username_->clear();
+  }
+  clear_has_username();
+}
+inline const ::std::string& Message_Login::username() const {
+  return *username_;
+}
+inline void Message_Login::set_username(const ::std::string& value) {
+  set_has_username();
+  if (username_ == &::google::protobuf::internal::kEmptyString) {
+    username_ = new ::std::string;
+  }
+  username_->assign(value);
+}
+inline void Message_Login::set_username(const char* value) {
+  set_has_username();
+  if (username_ == &::google::protobuf::internal::kEmptyString) {
+    username_ = new ::std::string;
+  }
+  username_->assign(value);
+}
+inline void Message_Login::set_username(const char* value, size_t size) {
+  set_has_username();
+  if (username_ == &::google::protobuf::internal::kEmptyString) {
+    username_ = new ::std::string;
+  }
+  username_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* Message_Login::mutable_username() {
+  set_has_username();
+  if (username_ == &::google::protobuf::internal::kEmptyString) {
+    username_ = new ::std::string;
+  }
+  return username_;
+}
+inline ::std::string* Message_Login::release_username() {
+  clear_has_username();
+  if (username_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = username_;
+    username_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void Message_Login::set_allocated_username(::std::string* username) {
+  if (username_ != &::google::protobuf::internal::kEmptyString) {
+    delete username_;
+  }
+  if (username) {
+    set_has_username();
+    username_ = username;
+  } else {
+    clear_has_username();
+    username_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string password = 2;
+inline bool Message_Login::has_password() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void Message_Login::set_has_password() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void Message_Login::clear_has_password() {
+  _has_bits_[0] &= ~0x00000002u;
 }
 inline void Message_Login::clear_password() {
   if (password_ != &::google::protobuf::internal::kEmptyString) {
@@ -363,6 +481,76 @@ inline void Message_Login::set_allocated_password(::std::string* password) {
   }
 }
 
+// required string ip = 3;
+inline bool Message_Login::has_ip() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void Message_Login::set_has_ip() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void Message_Login::clear_has_ip() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void Message_Login::clear_ip() {
+  if (ip_ != &::google::protobuf::internal::kEmptyString) {
+    ip_->clear();
+  }
+  clear_has_ip();
+}
+inline const ::std::string& Message_Login::ip() const {
+  return *ip_;
+}
+inline void Message_Login::set_ip(const ::std::string& value) {
+  set_has_ip();
+  if (ip_ == &::google::protobuf::internal::kEmptyString) {
+    ip_ = new ::std::string;
+  }
+  ip_->assign(value);
+}
+inline void Message_Login::set_ip(const char* value) {
+  set_has_ip();
+  if (ip_ == &::google::protobuf::internal::kEmptyString) {
+    ip_ = new ::std::string;
+  }
+  ip_->assign(value);
+}
+inline void Message_Login::set_ip(const char* value, size_t size) {
+  set_has_ip();
+  if (ip_ == &::google::protobuf::internal::kEmptyString) {
+    ip_ = new ::std::string;
+  }
+  ip_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* Message_Login::mutable_ip() {
+  set_has_ip();
+  if (ip_ == &::google::protobuf::internal::kEmptyString) {
+    ip_ = new ::std::string;
+  }
+  return ip_;
+}
+inline ::std::string* Message_Login::release_ip() {
+  clear_has_ip();
+  if (ip_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = ip_;
+    ip_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void Message_Login::set_allocated_ip(::std::string* ip) {
+  if (ip_ != &::google::protobuf::internal::kEmptyString) {
+    delete ip_;
+  }
+  if (ip) {
+    set_has_ip();
+    ip_ = ip;
+  } else {
+    clear_has_ip();
+    ip_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
 // -------------------------------------------------------------------
 
 // Message
@@ -390,15 +578,37 @@ inline void Message::set_messagetype(::Messages::Message_MessageType value) {
   messagetype_ = value;
 }
 
-// optional string username = 2;
-inline bool Message::has_username() const {
+// optional int64 connectionId = 2;
+inline bool Message::has_connectionid() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void Message::set_has_username() {
+inline void Message::set_has_connectionid() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void Message::clear_has_username() {
+inline void Message::clear_has_connectionid() {
   _has_bits_[0] &= ~0x00000002u;
+}
+inline void Message::clear_connectionid() {
+  connectionid_ = GOOGLE_LONGLONG(0);
+  clear_has_connectionid();
+}
+inline ::google::protobuf::int64 Message::connectionid() const {
+  return connectionid_;
+}
+inline void Message::set_connectionid(::google::protobuf::int64 value) {
+  set_has_connectionid();
+  connectionid_ = value;
+}
+
+// optional string username = 3;
+inline bool Message::has_username() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void Message::set_has_username() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void Message::clear_has_username() {
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline void Message::clear_username() {
   if (username_ != &::google::protobuf::internal::kEmptyString) {
@@ -460,15 +670,15 @@ inline void Message::set_allocated_username(::std::string* username) {
   }
 }
 
-// optional .Messages.Message.Login login = 3;
+// optional .Messages.Message.Login login = 4;
 inline bool Message::has_login() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
+  return (_has_bits_[0] & 0x00000008u) != 0;
 }
 inline void Message::set_has_login() {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
 }
 inline void Message::clear_has_login() {
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void Message::clear_login() {
   if (login_ != NULL) login_->::Messages::Message_Login::Clear();

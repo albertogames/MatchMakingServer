@@ -48,12 +48,19 @@ void CConnectionsServer::run(){
 			{	
 				if (_sConnect != INVALID_SOCKET){
 
+					sockaddr_in* pV4Addr = (struct sockaddr_in*)&_addr;
+					int ipAddr = pV4Addr->sin_addr.s_addr;
+
 					id = _connectionsContainer->insert(new CClientConnection(_sConnect,this,this));
 					
 					_connectionsContainer->run(id);
 
-					std::cout << "Client id: " << id <<" A connection was found" << std::endl;
-
+					std::cout << "Client id: " << id <<" A connection was found. IP: " << _addr.sin_addr.s_addr << std::endl;
+					printf("%d.%d.%d.%d.\n",
+						int(_addr.sin_addr.s_addr&0xFF),
+						int((_addr.sin_addr.s_addr&0xFF00)>>8),
+						int((_addr.sin_addr.s_addr&0xFF0000)>>16),
+						int((_addr.sin_addr.s_addr&0xFF000000)<<24));
 				}else{
 			
 					std::cout << "ERROR Server.run - accept(): " << WSAGetLastError() << std::endl;

@@ -27,11 +27,11 @@ void CGameServer::processGameMessage(char* message,int messageSize, int clientId
 		//LOG
 		case Messages::Message_MessageType::Message_MessageType_LOG:{
 
-
 			Messages::Message* messageSend = new Messages::Message();
 			messageSend->set_messagetype(Messages::Message_MessageType::Message_MessageType_LOG_OK);
+			messageSend->set_connectionid(clientId);
 
-			CGamePlayer* gp = new CGamePlayer("",clientId,msg.username());
+			CGamePlayer* gp = new CGamePlayer(msg.login().ip(),clientId,msg.login().username());
 	
 			_playersContainer->insert(clientId,gp);
 
@@ -56,7 +56,7 @@ void CGameServer::processGameMessage(char* message,int messageSize, int clientId
 
 			_clientConnectionsDISP.push_back(clientId);
 
-			sendPlayersToNewPlayer(clientId,msg.username());
+			sendPlayersToNewPlayer(clientId);
 
 			notifyNewPlayer(msg.username());
 
@@ -71,6 +71,32 @@ void CGameServer::processGameMessage(char* message,int messageSize, int clientId
 
 			break;
 		}
+		
+		case Messages::Message_MessageType::Message_MessageType_PLAY_REQUEST:{
+			
+			Messages::Message* messageSend = new Messages::Message();
+			messageSend->set_messagetype(Messages::Message_MessageType::Message_MessageType_PLAY_REQUEST);
+			messageSend->set_username(msg.username());
+
+			int i = messageSend->ByteSize();
+			char* aux = (char*)malloc(i);
+			memset(aux,0,i);
+			messageSend->SerializeToArray(aux,i);
+			char* aux2 = (char*)malloc(i+1);
+			memset(aux2,i,i+1);
+			memcpy_s(aux2 + 1,i,aux,i);
+			_connectionsServer->sendMessage(i + 1,aux2, clientId);
+			
+			//Destruir messageSend
+			delete(aux);
+			delete(aux2);
+			delete(messageSend);
+
+			break;
+		}
+
+
+
 
 	}
 	
@@ -156,9 +182,9 @@ void CGameServer::notifyExitPlayer(std::string user){
 }
 
 
-void CGameServer::sendPlayersToNewPlayer(int clientId, std::string user){
+void CGameServer::sendPlayersToNewPlayer(int clientId){
 	
-	std::cout << "SEND PLAYERS TO NEW PLAYER: " << clientId << ":" << user << "\n";
+	std::cout << "SEND PLAYERS TO NEW PLAYER: " << clientId;
 	
 	clientConnectionsDISp_type::iterator it;
 	Messages::Message* messageSend = new Messages::Message();
@@ -167,9 +193,11 @@ void CGameServer::sendPlayersToNewPlayer(int clientId, std::string user){
 
 	for (it = _clientConnectionsDISP.begin() ; it != _clientConnectionsDISP.end() ; it++){
 	
-		std::cout << "SEND PLAYER: " << *it << ":" << _playersContainer->get(*it)->getUser() << " to " << clientId << ":" << user << "\n"; 
+		std::cout << "SEND PLAYER: " << *it << ":" << _playersContainer->get(*it)->getUser() << " to " << clientId << "\n"; 
 
 		messageSend->set_username(_playersContainer->get(*it)->getUser());
+		messageSend->set_connectionid(*it);
+
 
 		int i = messageSend->ByteSize();
 		char* aux = (char*)malloc(i);

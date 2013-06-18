@@ -38,7 +38,7 @@ private:
 
 	void notifyNewPlayer(std::string user);
 
-	void sendPlayersToNewPlayer(int clientId, std::string user);
+	void sendPlayersToNewPlayer(int clientId);
 
 	typedef boost::container::list<int> clientConnectionsDISp_type;
 	

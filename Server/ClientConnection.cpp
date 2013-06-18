@@ -33,7 +33,6 @@ void CClientConnection::startThread()
 	{
 		
 		bytesReceived = recv(_connection, message, strlen(message), NULL);
-		
 		offSet = 0;
 		
 		if (bytesReceived > 0){
